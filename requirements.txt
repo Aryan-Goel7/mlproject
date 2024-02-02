@@ -5,4 +5,8 @@ matplotlib
 seaborn
 pyarrow
 dill
+xgboost 
+catboost
+fastAPI
+uvicorn
 #-e .

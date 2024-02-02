@@ -8,8 +8,8 @@ from dataclasses import dataclass
 
 
 from src.components.data_transformation import DataTransformation 
-from src.components.data_transformation import DataTransformationConfig
-
+# from src.components.data_transformation import DataTransformationConfig
+from src.components.model_trianer import ModelTrainer 
 @dataclass 
 class DataIngestionConfig : 
     train_data_path  : str = os.path.join("artifacts" , "train.csv") 
@@ -23,7 +23,7 @@ class DataIngestion:
     def intiate_data_ingestion(self): 
         logging.info( "Data Ingestion initiated ") 
         try : 
-            df = pd.read_csv("notebook/data/stud.csv") 
+            df = pd.read_csv("data/stud.csv") 
             logging.info("Read Dataset as DataFrame ") 
             os.makedirs(os.path.dirname(self.ingestion_path.train_data_path ) , exist_ok= True ) 
 
@@ -51,4 +51,7 @@ if __name__ == "__main__" :
     train_data , test_data = obj.intiate_data_ingestion()
 
     data_transformation = DataTransformation() 
-    data_transformation.initiate_data_transformation(train_data , test_data ) 
+    train_arr , test_arr , _ = data_transformation.initiate_data_transformation(train_data , test_data )
+    training_model = ModelTrainer()
+    performance = training_model.initiate_model_training(train_arr , test_arr ) 
+    print ( performance   ) 
